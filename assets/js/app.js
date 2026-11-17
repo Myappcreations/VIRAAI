@@ -12,10 +12,20 @@ document.addEventListener('click',e=>{const p=e.target.closest('[data-page]');if
 document.getElementById('menuBtn').addEventListener('click',()=>document.getElementById('sidebar').classList.toggle('open'));
 document.getElementById('profileBtn').addEventListener('click',()=>go('account'));
 function createJob(type,prompt,extra={}){if(!prompt.trim()){toast('Please enter a prompt first.');return}const job={id:'VY-'+Date.now().toString(36).toUpperCase(),type,prompt:prompt.trim(),status:'Queued',created:new Date().toISOString(),extra};state.jobs.unshift(job);save();openJob(job);simulate(job.id);toast('Demo job added to your queue.')}
-function openJob(job){document.getElementById('dialogJobText').textContent=job.type==='image'?'Image animation request: '+job.prompt:'Text-to-video request: '+job.prompt;document.getElementById('dialogProgress').style.width='8%';document.getElementById('dialogStatus').textContent='Queued';const d=document.getElementById('jobDialog');if(!d.open)d.showModal()}
+function openJob(job){
+  const video=document.getElementById('sampleVideo');
+  video.pause();
+  video.currentTime=0;
+  document.getElementById('dialogEyebrow').textContent=job.status==='Completed'?'SAMPLE VIDEO PREVIEW':'DEMO JOB DETAILS';
+  document.getElementById('dialogTitle').textContent=job.status==='Completed'?'Sample video player':'Your request is in the studio queue.';
+  document.getElementById('dialogJobText').textContent=(job.type==='image'?'Image-to-video request: ':'Text-to-video request: ')+job.prompt;
+  document.getElementById('dialogStatus').textContent=job.status;
+  document.getElementById('dialogJobId').textContent=job.id;
+  const d=document.getElementById('jobDialog');if(!d.open)d.showModal();
+}
 function simulate(id){const steps=[['Processing',48],['Completed',100]];steps.forEach((step,i)=>setTimeout(()=>{const j=state.jobs.find(x=>x.id===id);if(!j)return;j.status=step[0];save();if(document.getElementById('jobDialog').open){document.getElementById('dialogProgress').style.width=step[1]+'%';document.getElementById('dialogStatus').textContent=step[0]}},(i+1)*2300))}
-document.getElementById('closeDialog').addEventListener('click',()=>document.getElementById('jobDialog').close());
-document.getElementById('dialogGoLibrary').addEventListener('click',()=>{document.getElementById('jobDialog').close();go('creations')});
+document.getElementById('closeDialog').addEventListener('click',()=>{document.getElementById('sampleVideo').pause();document.getElementById('jobDialog').close()});
+document.getElementById('dialogGoLibrary').addEventListener('click',()=>{document.getElementById('sampleVideo').pause();document.getElementById('jobDialog').close();go('creations')});
 const tp=document.getElementById('textPrompt');tp.addEventListener('input',()=>document.getElementById('textCount').textContent=tp.value.length+' / 1200');
 
 document.getElementById('generateText').addEventListener('click',()=>createJob('text',tp.value,{duration:document.getElementById('textDuration').value,style:document.getElementById('textStyle').value,ratio:document.getElementById('textRatio').value,quality:document.getElementById('textQuality').value}));
