@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#171323"><meta name="description" content="VYRA AI — creative video studio prototype">
+<title>VYRA AI — Video Studio</title><link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="app-shell">
+<aside class="sidebar" id="sidebar">
+  <a class="brand" href="#" data-page="dashboard"><span class="brand-mark">✦</span><span><b>VYRA AI</b><small>VIDEO STUDIO</small></span></a>
+  <div class="side-label">WORKSPACE</div>
+  <button class="nav-link active" data-page="dashboard"><span>⌂</span> Dashboard</button>
+  <button class="nav-link" data-page="text"><span>✧</span> Text to Video</button>
+  <button class="nav-link" data-page="image"><span>▧</span> Image to Video</button>
+  <button class="nav-link" data-page="creations"><span>▣</span> My Creations</button>
+  <div class="side-label">ACCOUNT</div>
+  <button class="nav-link" data-page="account"><span>◉</span> Account & Credits</button>
+  <button class="nav-link" data-page="admin"><span>⚙</span> Demo Admin</button>
+  <div class="sidebar-bottom"><div class="credit-card"><small>DEMO CREDITS</small><strong id="sideCredits">100</strong><span>Prototype balance</span></div><p>VYRA AI <span>•</span> Phase 1</p></div>
+</aside>
+<main class="main">
+<header class="topbar"><button class="mobile-menu" id="menuBtn" aria-label="Open menu">☰</button><div class="crumb" id="crumb">Workspace / Dashboard</div><div class="top-actions"><span class="demo-pill">DEMO MODE</span><button class="avatar" id="profileBtn" title="Account">V</button></div></header>
+<div class="content">
+<section class="page active" id="page-dashboard">
+  <div class="welcome"><div><div class="eyebrow">YOUR CREATIVE SPACE</div><h1>Make something <em>remarkable.</em></h1><p>Turn an idea into a moving picture. Your studio is ready.</p></div><div class="welcome-spark">✦</div></div>
+  <div class="stats"><article class="stat"><span>Available credits</span><strong id="dashCredits">100</strong><small>Demo balance</small></article><article class="stat"><span>Creations</span><strong id="dashJobs">0</strong><small>All generated jobs</small></article><article class="stat"><span>Completed</span><strong id="dashDone">0</strong><small>Sample previews</small></article></div>
+  <div class="section-head"><div><h2>Start creating</h2><p>Choose a workflow to begin.</p></div></div>
+  <div class="action-grid"><button class="action-card" data-page="text"><span class="action-icon">✧</span><b>Text to Video</b><small>Describe a scene and create a demo video job.</small><span class="card-arrow">↗</span></button><button class="action-card" data-page="image"><span class="action-icon">▧</span><b>Image to Video</b><small>Upload an image and describe the motion.</small><span class="card-arrow">↗</span></button></div>
+  <div class="section-head"><div><h2>Recent creations</h2><p>Your latest demo jobs appear here.</p></div><button class="text-button" data-page="creations">View all →</button></div>
+  <div id="recentJobs" class="job-list empty-state">No creations yet. Start with a text or image prompt.</div>
+  <div class="notice"><span>ⓘ</span><div><b>Prototype environment</b><p>VYRA AI currently simulates generation. No real AI model is connected, and sample previews are clearly labelled.</p></div></div>
+</section>
+<section class="page" id="page-text">
+  <div class="page-heading"><div class="eyebrow">CREATE / TEXT TO VIDEO</div><h1>Give your idea <em>motion.</em></h1><p>Describe a scene featuring fictional adult characters or non-sensitive subjects.</p></div>
+  <div class="creator-layout"><div class="panel form-panel">
+    <label for="textPrompt">Your prompt</label><textarea id="textPrompt" rows="5" maxlength="1200" placeholder="A cinematic scene of two adult dancers performing under soft purple stage lights..."></textarea><div class="field-foot"><span>Be descriptive. Avoid real-person impersonation.</span><span id="textCount">0 / 1200</span></div>
+    <div class="two-fields"><div><label for="textStyle">Visual style</label><select id="textStyle"><option>Cinematic</option><option>Anime</option><option>Documentary</option><option>Dreamlike</option><option>3D animation</option></select></div><div><label for="textRatio">Aspect ratio</label><select id="textRatio"><option>16:9 Landscape</option><option>9:16 Portrait</option><option>1:1 Square</option></select></div></div>
+    <div class="two-fields"><div><label for="textDuration">Duration</label><select id="textDuration"><option value="5">5 seconds</option><option value="10">10 seconds</option><option value="15">15 seconds</option></select></div><div><label for="textQuality">Quality</label><select id="textQuality"><option>Standard preview</option><option>High preview</option></select></div></div>
+    <div class="cost-row"><span>Estimated demo cost</span><b id="textCost">10 credits</b></div><button class="primary-btn full" id="generateText">✦ Generate demo video</button><p class="fine-print">Demo jobs use sample status updates only. No video-generation API is called.</p>
+  </div><div class="panel side-info"><div class="preview-placeholder"><span>✦</span><b>Your preview appears here</b><small>Submit a prompt to create a demo job.</small></div><h3>Prompt tips</h3><ul><li>Describe the setting and lighting.</li><li>Specify camera movement.</li><li>Use fictional adult characters only.</li><li>Keep prompts clear and focused.</li></ul></div></div>
+</section>
+<section class="page" id="page-image">
+  <div class="page-heading"><div class="eyebrow">CREATE / IMAGE TO VIDEO</div><h1>Bring a still image <em>to life.</em></h1><p>Upload an image you own or have permission to use.</p></div>
+  <div class="creator-layout"><div class="panel form-panel">
+    <label>Source image</label><label class="upload-zone" id="uploadZone" for="imageFile"><span class="upload-icon">＋</span><b>Choose an image</b><small>JPG, PNG or WebP · maximum 8 MB</small><input id="imageFile" type="file" accept="image/png,image/jpeg,image/webp"></label>
+    <div id="imagePreviewWrap" class="image-preview-wrap" hidden><img id="imagePreview" alt="Selected upload preview"><button class="text-button" id="removeImage">Remove image</button></div>
+    <label for="imagePrompt">Motion description</label><textarea id="imagePrompt" rows="4" maxlength="800" placeholder="Slow camera push-in, gentle movement in the background..."></textarea><div class="field-foot"><span>Do not upload intimate or non-consensual images.</span><span id="imageCount">0 / 800</span></div>
+    <div class="two-fields"><div><label for="imageDuration">Duration</label><select id="imageDuration"><option value="5">5 seconds</option><option value="10">10 seconds</option></select></div><div><label for="imageRatio">Aspect ratio</label><select id="imageRatio"><option>Original</option><option>16:9 Landscape</option><option>9:16 Portrait</option></select></div></div>
+    <div class="cost-row"><span>Estimated demo cost</span><b>12 credits</b></div><button class="primary-btn full" id="generateImage">✦ Create demo animation</button><p class="fine-print">The selected image is previewed locally and is not uploaded to a server.</p>
+  </div><div class="panel side-info"><div class="preview-placeholder" id="imageSidePreview"><span>▧</span><b>Image preview</b><small>Your selected image will appear here.</small></div><h3>Image safety</h3><ul><li>Use images you created or are licensed to use.</li><li>Only use identifiable adults with their permission.</li><li>No sexual deepfakes or non-consensual intimate imagery.</li><li>Remove private metadata before any future upload.</li></ul></div></div>
+</section>
+<section class="page" id="page-creations">
+  <div class="page-heading"><div class="eyebrow">LIBRARY</div><h1>My <em>creations.</em></h1><p>Review your demo generation jobs.</p></div><div class="filter-row"><div class="filter-tabs"><button class="filter active" data-filter="all">All</button><button class="filter" data-filter="completed">Completed</button><button class="filter" data-filter="processing">Processing</button></div><button class="secondary-btn" id="clearJobs">Clear history</button></div><div id="allJobs" class="job-list empty-state">Your library is empty.</div>
+</section>
+<section class="page" id="page-account">
+  <div class="page-heading"><div class="eyebrow">ACCOUNT</div><h1>Your studio <em>account.</em></h1><p>Prototype profile and credit controls.</p></div>
+  <div class="account-grid"><div class="panel"><div class="account-avatar">V</div><h2 id="accountName">VYRA Creator</h2><p class="muted" id="accountEmail">demo@vyra.local</p><span class="demo-pill">DEMO ACCOUNT</span><hr><label for="displayName">Display name</label><input id="displayName" value="VYRA Creator"><button class="secondary-btn full" id="saveProfile">Save profile</button></div><div class="panel balance-panel"><div class="eyebrow">AVAILABLE BALANCE</div><strong id="accountCredits">100</strong><p>Demo credits are stored in this browser only.</p><button class="primary-btn full" id="resetCredits">Reset demo credits</button><small>Credits have no monetary value and cannot be purchased.</small></div></div>
+  <div class="notice"><span>ⓘ</span><div><b>Demo sign-in</b><p>This prototype does not collect passwords or connect to Google. Authentication must be implemented securely on the backend before public launch.</p></div></div>
+</section>
+<section class="page" id="page-admin">
+  <div class="page-heading"><div class="eyebrow">ADMIN / PROTOTYPE</div><h1>Studio <em>overview.</em></h1><p>Local demonstration metrics only. No real users or payments.</p></div>
+  <div class="stats"><article class="stat"><span>Total demo jobs</span><strong id="adminJobs">0</strong></article><article class="stat"><span>Completed jobs</span><strong id="adminDone">0</strong></article><article class="stat"><span>Credits remaining</span><strong id="adminCredits">100</strong></article></div>
+  <div class="panel"><h2>Recent activity</h2><div id="adminActivity" class="job-list empty-state">No activity yet.</div></div>
+  <div class="notice warning"><span>⚠</span><div><b>Not a secure admin panel</b><p>This is a frontend-only preview. Do not deploy it as an operational admin system. Real admin authorization must be enforced server-side.</p></div></div>
+</section>
+</div>
+<footer class="footer"><span>© 2026 VYRA AI Studio</span><span>Prototype · No AI generation connected</span></footer>
+</main>
+</div>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+<dialog id="jobDialog"><div class="dialog-content"><button class="dialog-close" id="closeDialog">×</button><div class="eyebrow">DEMO JOB CREATED</div><h2>Your request is in the studio queue.</h2><p id="dialogJobText"></p><div class="progress-track"><div id="dialogProgress"></div></div><b id="dialogStatus">Queued</b><p class="fine-print">This is a simulated workflow, not a generated video.</p><button class="primary-btn full" id="dialogGoLibrary">View my creations</button></div></dialog>
+<script src="app.js"></script>
+</body></html>
